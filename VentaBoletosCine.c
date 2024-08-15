@@ -1,98 +1,80 @@
-#include <stdio.h>  /* Funciones de entrada y salida */
-#include <stdlib.h> /* Funciones del sistema */
-#include <locale.h> /* Configuración regional */
+#include<stdio.h>
+#include <locale.h>
 
-int main() {
-    /* Configuración regional */
-    setlocale(LC_ALL, "");
-
-    /* Declaración de variables y constantes */
-    const int PRECIO = 45;
-    int nBoletos, total, pago, cambio;
-
-    /* Mensaje de bienvenida */
-    printf("\n\t*************** Venta de boletos CineESAD *****************\n\n");
-
-    /* Datos de entrada */
-    printf("\tProporcione el número de boletos que desea comprar:\t");
-    scanf("%d", &nBoletos);
-
-    /* Calculamos el total de la venta */
-    total = nBoletos * PRECIO;
-    printf("\n\t\tEl total es *** %d pesos *** \n\n", total);
-
-    /* Leemos el pago y calculamos el cambio */
-    printf("\n\t\tIndique el monto de su pago: ");
-    scanf("%d", &pago);
-
-    /* Calculamos el cambio y lo devolvemos */
-    cambio = pago - total;
-
-    if (cambio > 0) {
-    	
-    	 printf("\n\tEl monto de su cambio es $%d\n", cambio);
-    	 
-        /* Calcular y mostrar billetes de $200 */
-        if (cambio / 200 > 0) {
-            printf("\n\t\t%d %s de $200", cambio / 200, (cambio / 200 == 1) ? "billete" : "billetes");
-            cambio = cambio % 200;
-        }
-
-        /* Calcular y mostrar billetes de $100 */
-        if (cambio / 100 > 0) {
-            printf("\n\t\t%d %s de $100", cambio / 100, (cambio / 100 == 1) ? "billete" : "billetes");
-            cambio = cambio % 100;
-        }
-
-        /* Calcular y mostrar billetes de $50 */
-        if (cambio / 50 > 0) {
-            printf("\n\t\t%d %s de $50", cambio / 50, (cambio / 50 == 1) ? "billete" : "billetes");
-            cambio = cambio % 50;
-        }
-
-        /* Calcular y mostrar billetes de $20 */
-        if (cambio / 20 > 0) {
-            printf("\n\t\t%d %s de $20", cambio / 20, (cambio / 20 == 1) ? "billete" : "billetes");
-            cambio = cambio % 20;
-        }
-
-        /* Calcular y mostrar monedas de $10 */
-        if (cambio / 10 > 0) {
-            printf("\n\t\t%d %s de $10", cambio / 10, (cambio / 10 == 1) ? "moneda" : "monedas");
-            cambio = cambio % 10;
-        }
-
-        /* Calcular y mostrar monedas de $5 */
-        if (cambio / 5 > 0) {
-            printf("\n\t\t%d %s de $5", cambio / 5, (cambio / 5 == 1) ? "moneda" : "monedas");
-            cambio = cambio % 5;
-        }
-
-        /* Calcular y mostrar monedas de $2 */
-        if (cambio / 2 > 0) {
-            printf("\n\t\t%d %s de $2", cambio / 2, (cambio / 2 == 1) ? "moneda" : "monedas");
-            cambio = cambio % 2;
-        }
-
-        /* Calcular y mostrar monedas de $1 */
-        if (cambio > 0) {
-            printf("\n\t\t%d %s de $1", cambio, (cambio == 1) ? "moneda" : "monedas");
-        }
-        
-        printf("\n\n\tAgradecemos su preferencia, disfrute su película.\n\n");
-        
+int main () {
+	
+	setlocale(LC_ALL, "");
+	
+	int folio, integrantes, hijos, monto = 0; 
+	char nombre[50], estado[10], decision;
+	float apoyoIntegrantes, apoyoHijos, total; 
+	
+	do {
+	
+	printf("Ingrese el folio de registro: ");
+	scanf("%d", &folio);
+	
+	printf("Ingrese Nombre de la persona que proporciona la informaciÃ³n: ");
+	scanf("%s", &nombre);
+	
+	printf("Ingrese estado donde radica la familia afectada: ");
+	scanf("%s", &estado);
+	
+	printf("Ingrese nÃºmero de integrantes: ");
+	scanf("%d", &integrantes);
+	
+	printf("Ingrese nÃºmero de hijos menores: ");
+	scanf("%d", &hijos);
+	
+	printf("\n=============================================================================\n\n");
+	printf("\tFolio de registro: %d\n", folio);
+	printf("\tNombre de la persona que proporciona informaciÃ³n: %s\n\n", nombre);
+	
+	if(strcmp(estado, "Chiapas") == 0) {
+        monto = 45000;
+    } else if(strcmp(estado, "Guerrero") == 0) {
+        monto = 60000;
+    } else if(strcmp(estado, "Oaxaca") == 0) {
+        monto = 80000;
     } else {
-    	if (cambio < 0){
-    		printf("\n\t\tDinero insuficiente. Compra cancelada.\n");
-		} else {
-        printf("\n\t\tNo se requiere cambio.");
-        printf("\n\n\tAgradecemos su preferencia, disfrute su película.\n\n");
-        	}
+        printf("\tEstado invalido.\n");
     }
-
     
+    printf("\tMonto inicial por estado donde radica: $%d.00\n", monto);
+    
+    if(integrantes >= 3 && integrantes <= 4 ) {
+    	apoyoIntegrantes = monto*.10;
+    } else if(integrantes >= 5 && integrantes <= 7 ) {
+    	apoyoIntegrantes = monto*.15;
+    } else if(integrantes > 7 ) {
+    	apoyoIntegrantes = monto*.20;
+    } else {
+        printf("\tNumero de integrantes invalido.\n");
+    }
+    
+    printf("\tApoyo por integrantes de familia: $%.2f\n", apoyoIntegrantes);
+		
+	if(hijos >= 1 && hijos <= 3 ) { 
+		apoyoHijos = hijos*4500.00;
+    } else if(hijos >= 4 && hijos <= 6 ) {
+        apoyoHijos = hijos*3000.00;
+    } else if(hijos > 6 ) {
+    	apoyoHijos = hijos*2000.00;
+    } else {
+        printf("\tNumero de integrantes invalido.\n");
+    }
+    
+    printf("\tApoyo por hijos menores de la familia: $%.2f\n", apoyoHijos);
+    
+    total = monto + apoyoIntegrantes + apoyoHijos;
+    printf("\n\t---------------------------------------------------\n");
+    printf("\n\t\tMonto total del apoyo: $%.2f\n", total);
+    printf("\n\t---------------------------------------------------\n");
+    
+    printf("\n=============================================================================\n\n");
+    
+    printf("\nÂ¿Desea ingresar otro registro? S(SÃ­) o N(No):");
+    scanf(" %c", &decision);
+} while (decision != 'n' && decision != 'N');
 
-    getchar(); /* Espera para que el usuario vea el resultado antes de cerrar */
-    return 0;  /* Fin de la función main */
 }
-
